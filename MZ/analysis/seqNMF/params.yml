@@ -1,0 +1,30 @@
+paths:
+  {}
+  # dir_sf_and_FOVs: /n/data1/hms/neurobio/sabatini/gyu/github_clone/ROICaT_paper/simulated_data/20220901/coordinate_sweeps/density0.5/trans0.1/caiman_sf.pickle
+  # save_dir: /n/data1/hms/neurobio/sabatini/gyu/github_clone/ROICaT_paper/caiman_test/batch_run/parameter_sweep/density1/second_sweep
+kwarg_params:
+  # {}
+  # W_init: None
+  # H_init: None
+  plot_it: False
+  max_iter: 100
+  # tol: -np.inf
+  shift: True
+  sort_factors: True
+  lambda_L1W: 0
+  lambda_L1H: 0
+  lambda_OrthH: 0
+  lambda_OrthW: 0
+  # M: None
+  use_W_update: True
+  W_fixed: False
+sweep_params:
+  # {}
+  # K: [5, 10, 15, 20]
+  # L: [150, 300, 450, 600]
+  # Lambda: [0.0001, 0.00001, 0.000001, 0.0000001]
+  K: [5, 10]
+  L: [150, 300]
+  Lambda: [0.0001, 0.00001]
+other_params:
+  {}
