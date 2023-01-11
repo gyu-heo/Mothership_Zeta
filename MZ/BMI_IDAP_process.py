@@ -24,11 +24,15 @@ class BMI_IDAP_multi_run:
         cascade = False,
         unfinished = False,
     ):
-        """_summary_
+        """One-liner code to run ROI classification and subsequent analysis. Will be deprecated if we successfully implement ROICaT classification process.
+        Source code created by RH
 
         Args:
             dir_s2p (_type_): _description_
             seqNMF_param (_type_, optional): _description_. Defaults to None.
+            reference_session (_type_, optional): _description_. Defaults to None.
+            cascade (bool, optional): _description_. Defaults to False.
+            unfinished (bool, optional): _description_. Defaults to False.
         """
         logging.warning(dir_s2p)
         self.dir_s2p = Path(dir_s2p).resolve()

@@ -24,6 +24,18 @@ class extract_multi_run:
     path_s2pScript_remote = Path(MZ.__path__[0]).resolve() / 'MZ/source_extraction/s2p_on_o2/remote_run_s2p.py',
     name_job = 'jobNum_',
     ):
+        """One-liner code for the batch suite2p. The whole set of code will be improved later via inheritance.
+        Source code created by RH
+
+
+        Args:
+            dir_data (_type_, optional):  Data directory for suite2p. Assuming a specific day-folder structure.. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/data/abduction").resolve().
+            dir_output (_type_, optional): Suite2p output will be saved here. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/analysis/suite2p_output/").resolve().
+            dir_fastDisk (_type_, optional): Temporary directory for the suite2p process. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/analysis/suite2p_fastDisk/").resolve().
+            path_dispatcher (_type_, optional): Python code path to submit detailed batch suite2p job. Defaults to Path(MZ.__path__[0]).resolve()/'MZ/source_extraction/s2p_on_o2/dispatcher.py'.
+            path_s2pScript_remote (_type_, optional): Python code path to run suite2p on Linux server. Defaults to Path(MZ.__path__[0]).resolve()/'MZ/source_extraction/s2p_on_o2/remote_run_s2p.py'.
+            name_job (str, optional): Simple prefix. Defaults to 'jobNum_'.
+        """    
         self.module_path = Path(MZ.__path__[0]).resolve().parents[0]
         self.dir_data = dir_data
         self.dir_output = dir_output
@@ -37,6 +49,11 @@ class extract_multi_run:
         self.batch_command = self.batch_maker()
 
     def find_movie(self):
+        """List raw tif files aka 2p videos parent directory to submit batch suite2p job
+
+        Returns:
+            _type_: _description_
+        """        
         movie_list = []
         for movie_path in self.dir_data.rglob('*'):
             if 'tif' in str(movie_path):
@@ -46,6 +63,11 @@ class extract_multi_run:
         return movie_list
 
     def batch_maker(self):
+        """Create slurm command to submit batch logger-alignment job
+
+        Returns:
+            _type_: _description_
+        """        
         mkdir_list, command_list = [], []
         for session in self.movie_list:
             dir_data_remote = Path(session).resolve()
@@ -59,6 +81,8 @@ class extract_multi_run:
         return batch_command
 
     def multi_run(self):
+        """Submit batch suite2p job
+        """        
         for cmd_mkdir in self.batch_command['mkdir_list']:
             os.system(cmd_mkdir)
 

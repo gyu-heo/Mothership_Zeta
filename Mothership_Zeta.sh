@@ -17,7 +17,6 @@ source activate /home/gyh930/.conda/envs/ROICaT
 cd /n/data1/hms/neurobio/sabatini/gyu/github_clone
 
 echo "$@"
-# python3 -c "import Mothership_Zeta as MZ;runner = MZ.abduction(); runner.journey()" "$@"
 
-# python3 -c "import Mothership_Zeta as MZ; MZ.mothership.journey_process()" "$@"
-python3 -c "import Mothership_Zeta as MZ; MZ.mothership.logger_align_process()" "$@"
+python3 -c "import Mothership_Zeta as MZ; MZ.mothership.journey_process()" "$@"
+# python3 -c "import Mothership_Zeta as MZ; MZ.mothership.logger_align_process()" "$@"

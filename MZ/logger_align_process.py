@@ -16,11 +16,15 @@ class logger_multi_run:
         dir_output = Path("/n/data1/hms/neurobio/sabatini/gyu/analysis/BWAIN_output/").resolve(),
         path_aligner = Path("/n/data1/hms/neurobio/sabatini/gyu/github_clone/Mothership_Zeta/MZ/behavior/logger_align/BMIaligner.sh").resolve()
     ):
-        """_summary_
+        """One-liner code for the batch logger-alignment. The whole set of code will be improved later via inheritance.
+        Source code created by RH
+
 
         Args:
-            dir_data (_type_): _description_. Defaults to None.
-        """    
+            dir_data (_type_, optional):  Data directory for logger-alignment. Assuming a specific day-folder structure.. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/data/abduction").resolve().
+            dir_output (_type_, optional): Aligned loggers will be saved here. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/analysis/BWAIN_output/").resolve().
+            path_aligner (_type_, optional): Shell script path to run MATLAB logger-alignment on Linux server. Defaults to Path("/n/data1/hms/neurobio/sabatini/gyu/github_clone/Mothership_Zeta/MZ/behavior/logger_align/BMIaligner.sh").resolve().
+        """
         self.dir_data = dir_data
         self.dir_output = dir_output
         self.path_aligner = path_aligner
@@ -31,6 +35,11 @@ class logger_multi_run:
         self.batch_command = self.batch_maker()
 
     def find_logger(self):
+        """List raw logger files parent directory to submit batch logger-alignment job
+
+        Returns:
+            list: Parent directory that contains raw loggers
+        """        
         logger_list = []
         for logger_path in self.dir_data.rglob('*'):
             if ('logger.mat' in str(logger_path)) or ('logger_valsROIs.mat' in str(logger_path)):
@@ -40,6 +49,11 @@ class logger_multi_run:
         return logger_list
 
     def batch_maker(self):
+        """Create slurm command to submit batch logger-alignment job
+
+        Returns:
+            dict: Slurm command dictionary
+        """        
         mkdir_list, command_list = [], []
         for session in self.logger_list:
             dir_data_remote = Path(session).resolve()
@@ -54,6 +68,8 @@ class logger_multi_run:
         return batch_command
 
     def multi_run(self):
+        """Submit batch logger-alignment job
+        """        
         for cmd_mkdir in self.batch_command['mkdir_list']:
             os.system(cmd_mkdir)
 

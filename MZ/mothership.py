@@ -13,10 +13,20 @@ class abduction:
         dir_data = "/n/data1/hms/neurobio/sabatini/gyu/data/abduction",
         save_dir = None,
         source_extraction = "suite2p",
-        classify = "BMI_IDAP",
+        classify = "ROICaT",
         tracking = "ROICaT",
         analysis = "seqNMF",
     ):
+        """One-liner code for the batch suite2p and logger-alignment. The whole set of code will be improved later via inheritance.
+
+        Args:
+            dir_data (str, optional): Data directory for suite2p and logger-alignment. Assuming a specific day-folder structure. Defaults to "/n/data1/hms/neurobio/sabatini/gyu/data/abduction".
+            save_dir (_type_, optional): Not functional rn. Defaults to None.
+            source_extraction (str, optional): Not functional rn. Defaults to "suite2p".
+            classify (str, optional): Not functional rn. Defaults to "ROICaT".
+            tracking (str, optional): Not functional rn. Defaults to "ROICaT".
+            analysis (str, optional): Not functional rn. Defaults to "seqNMF".
+        """    
         dir_data = Path(dir_data).resolve()
         self.dir_data = dir_data
         self.save_dir = save_dir
@@ -26,16 +36,22 @@ class abduction:
         self.analysis = analysis
 
     def journey(self):
+        """Submit both suite2p and logger-alignment job
+        """        
         self.extraction()
         self.logger_align()
 
     def extraction(self):
+        """Submit batch suite2p job
+        """        
         logging.warning("Journey 1: source extraction")
         logging.warning(self.dir_data)
         extraction_runner = MZ.extract_multi_run(dir_data = self.dir_data)
         extraction_runner.multi_run()
 
     def logger_align(self):
+        """Submit batch logger-alignment job
+        """        
         logging.warning("Journey 2: logger alignment")
         logging.warning(self.dir_data)
         logger_align_runner = MZ.logger_multi_run(dir_data = self.dir_data)
@@ -65,33 +81,7 @@ def cmdline_parser():
         "--dir-data",
         dest = "dir_data",
         default="/n/data1/hms/neurobio/sabatini/gyu/data/abduction",
-        help="Data_saved_here",
+        help="Data directory for suite2p and logger-alignment. Assuming a specific day-folder structure.",
     )
-    # parser.add_argument(
-    #     "--seqNMF-param",
-    #     dest = "seqNMF_param",
-    #     default="/n/data1/hms/neurobio/sabatini/gyu/github_clone/Mothership_Zeta/MZ/analysis/seqNMF/params.yml",
-    #     help="seqNMF param list",
-    # )
-    # parser.add_argument(
-    #     "--reference-session",
-    #     dest = "reference_session",
-    #     default=None,
-    #     help="Choose a reference session to calculate W_init",
-    # )
-    # parser.add_argument(
-    #     "--cascade",
-    #     dest = "cascade",
-    #     default=False,
-    #     action="store_true",
-    #     help="Cascade seqNMF?",
-    # )
-    # parser.add_argument(
-    #     "--unfinished",
-    #     dest = "unfinished",
-    #     default=False,
-    #     action="store_true",
-    #     help="Any missing job, trigger True",
-    # )
 
     return parser.parse_args()
